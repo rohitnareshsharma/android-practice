@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">practice</string>
+    <string name="avatar_image_of_repo">Avatar Image of Repo</string>
+    <string name="trending">Trending</string>
+    <string name="menu_icon_on_right_top">Menu icon on right top</string>
+    <string name="repo_description">%1$s (%2$s)</string>
+    <string name="no_result_found">No result found</string>
+    <string name="something_went_wrong">Something went wrong..</string>
+    <string name="empty_view_error_message">An alien is probably blocking your signal</string>
+    <string name="retry_all_caps">RETRY</string>
+    <string name="unknown">Unknown</string>
+
+</resources>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.practice.data.datamodels.TrendingRepoListItemDataModel" />
+    </data>
+    
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{()->viewModel.setSelected(true)}"
+        android:background="?android:attr/selectableItemBackground">
+
+        <ImageView
+            android:id="@+id/iv_repo_avatar"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            app:imageUrl="@{viewModel.avatar}"
+            android:background="@drawable/round_circular_gray_shape"
+            android:contentDescription="@string/avatar_image_of_repo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_author_name"
+            style="@style/normal_listitem_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@{viewModel.author}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_repo_avatar"
+            app:layout_constraintTop_toTopOf="@id/iv_repo_avatar"
+            tools:text="jakevdp" />
+
+        <TextView
+            android:id="@+id/tv_repo_name"
+            style="@style/normal_listitem_text_medium_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="@{viewModel.name}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_author_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_author_name"
+            tools:text="PythonDataScienceHandbook" />
+
+        <TextView
+            android:id="@+id/tv_repo_description"
+            style="@style/normal_listitem_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:text="@{@string/repo_description(viewModel.description, viewModel.url)}"
+            android:maxLines="7"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_author_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_repo_name"
+            tools:text="This is demo description of this trending repo. This can maximum be a two line text." />
+
+        <TextView
+            android:id="@+id/tv_repo_language"
+            style="@style/normal_listitem_number_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{viewModel.language != null ? viewModel.language : @string/unknown}"
+            android:drawableStart="@drawable/round_circular_red_dot"
+            android:drawablePadding="4dp"
+            app:layout_constraintStart_toStartOf="@id/tv_author_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_repo_description"
+            tools:text="Java" />
+
+        <TextView
+            android:id="@+id/tv_repo_star"
+            style="@style/normal_listitem_number_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:drawableStart="@drawable/star_yellow_16"
+            android:drawablePadding="4dp"
+            android:text="@{viewModel.stars}"
+            app:layout_constraintStart_toEndOf="@id/tv_repo_language"
+            app:layout_constraintTop_toTopOf="@id/tv_repo_language"
+            tools:text="24,356" />
+
+        <TextView
+            android:id="@+id/tv_repo_fork"
+            style="@style/normal_listitem_number_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:drawableStart="@drawable/fork_black_16"
+            android:drawablePadding="4dp"
+            android:text="@{viewModel.forks}"
+            app:layout_constraintStart_toEndOf="@id/tv_repo_star"
+            app:layout_constraintTop_toTopOf="@id/tv_repo_star"
+            tools:text="24,356" />
+
+        <View
+            android:id="@+id/view_drop_shadow"
+            style="@style/blurred_drop_shadow_style"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_repo_star" />
+
+        <View
+            style="@style/divider_style_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"
+            app:visibleOrGone="@{!viewModel.expanded}"
+            app:layout_constraintTop_toBottomOf="@id/tv_repo_star" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_expanded_view_items"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:visibleOrGone="@{viewModel.expanded}"
+            app:constraint_referenced_ids="tv_repo_description,tv_repo_language,tv_repo_star,tv_repo_fork,view_drop_shadow"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

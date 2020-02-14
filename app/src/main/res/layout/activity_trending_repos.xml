@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.practice.data.viewmodels.TrendingReposViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.practice.ui.adapters.TrendingRepoListAdapter" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.activities.TrendingReposActivity">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/action_bar_title_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="@string/trending"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:onClick="onCreatePopupMenu"
+            android:contentDescription="@string/menu_icon_on_right_top"
+            app:layout_constraintBottom_toBottomOf="@id/tv_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_title"
+            app:srcCompat="@drawable/more_black_24" />
+
+        <View
+            android:id="@+id/view_divider"
+            style="@style/divider_style_horizontal"
+            android:layout_marginTop="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+        <include
+            android:id="@+id/loading_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/trending_list_loading_placeholder"
+            app:layout_constraintTop_toBottomOf="@id/view_divider"/>
+
+        <ImageView
+            android:id="@+id/iv_empty_view_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/no_result_found"
+            app:layout_constraintBottom_toTopOf="@id/tv_empty_view_title_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:srcCompat="@drawable/no_internet_connection" />
+
+        <TextView
+            android:id="@+id/tv_empty_view_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            style="@style/empty_view_title_text_style"
+            app:layout_constraintBottom_toTopOf="@id/tv_empty_view_message_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/something_went_wrong"
+            app:layout_constraintTop_toBottomOf="@id/iv_empty_view_icon" />
+
+        <TextView
+            android:id="@+id/tv_empty_view_message_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            style="@style/empty_view_message_text_style"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/empty_view_error_message"
+            app:layout_constraintTop_toBottomOf="@id/tv_empty_view_title_text" />
+
+        <TextView
+            android:id="@+id/tv_retry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/retry_all_caps"
+            android:gravity="center"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:onClick="@{()->viewModel.fetchTrendingRepo(true)}"
+            style="@style/retry_button_style"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="16dp" />
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:refreshing="@{safeUnbox(viewModel.isLoading)}"
+            app:onRefreshListener="@{()->viewModel.fetchTrendingRepo(true)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_divider">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_trending_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:adapter="@{adapter}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/trending_repos_list_item" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_empty_views"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{safeUnbox(viewModel.isLoading) || adapter.itemCount != 0 ? View.GONE : View.VISIBLE}"
+            app:constraint_referenced_ids="iv_empty_view_icon,tv_empty_view_title_text,tv_empty_view_message_text,tv_retry"
+            tools:visibility="visible" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_loading_views"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{safeUnbox(viewModel.isLoading) ? View.VISIBLE : View.GONE}"
+            app:constraint_referenced_ids="loading_container"
+            tools:visibility="gone" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_data_views"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{safeUnbox(viewModel.isLoading()) || adapter.itemCount == 0 ? View.GONE : View.VISIBLE}"
+            app:constraint_referenced_ids="swipe_refresh_layout"
+            tools:visibility="gone" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

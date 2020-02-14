@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/sl_loading_container"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        app:shimmer_duration="800">
+
+        <!-- Adding 12 rows of placeholders -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/trending_repos_list_item_placeholder_layout" />
+            <include layout="@layout/trending_repos_list_item_placeholder_layout" />
+            <include layout="@layout/trending_repos_list_item_placeholder_layout" />
+            <include layout="@layout/trending_repos_list_item_placeholder_layout" />
+            <include layout="@layout/trending_repos_list_item_placeholder_layout" />
+            <include layout="@layout/trending_repos_list_item_placeholder_layout" />
+            <include layout="@layout/trending_repos_list_item_placeholder_layout" />
+            <include layout="@layout/trending_repos_list_item_placeholder_layout" />
+            <include layout="@layout/trending_repos_list_item_placeholder_layout" />
+            <include layout="@layout/trending_repos_list_item_placeholder_layout" />
+            <include layout="@layout/trending_repos_list_item_placeholder_layout" />
+            <include layout="@layout/trending_repos_list_item_placeholder_layout" />
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+</layout>
