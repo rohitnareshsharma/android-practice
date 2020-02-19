@@ -30,15 +30,6 @@ We have respectively 4,5 test cases for both unit and ui category.
 4. Espresso, RoboElectric, JUnit, MockWebServer for Testing
 5. EasyVolley for Networking
 
-
-# 2 Hour Cache Requirement
-
-There is nothing specifically done for this requirement.
-As network lib of ours do this internally for us based on the
-cache-header of response. It should never be a client side driven
-mechanism. Although if we still want to do this client side. We
-can do preference based work. But it's not done in this assignment.
-
 # EasyVolley for Networking
 
 EasyVolley is my own customised version of Volley. In which i have
