@@ -3,22 +3,6 @@
 Make a single screen application to list all the trending git hub repositories
 fetched from a public api
 
-# Requirements
-
-1.  The app should support a minimum SDK version of 19<br>
-2.  The app should fetch the trending repositories from the provided public API and display it to the users<br>
-3.  While the data is being fetched, the app should show a loading state. Shimmer animation is optional<br>
-4.  If the app is not able to fetch the data, then it should show an error state to the user with an option to retry again<br>
-5.  All the items in the list should be in their collapsed state by default and can be expanded on being tapped<br>
-6.  Tapping any item will expand it to show more details and collapse any already expanded item. Tapping the same item in expanded state should collapse it<br>
-7.  The app should be able to handle configuration changes (like rotation)<br>
-8.  The app should have 100% offline support. Once the data is fetched successfully from remote, it should be stored locally and served from cache thereafter till the cache is not expired<br>
-9.  The cached data should only be valid for a duration of 2 hour after that the app should attempt to refresh the data from remote and purge the cache if successful<br>
-10. The app should give a pull-to-refresh option to the user to force fetch data from remote.<br>
-
-
-# Apk Link (Debug Build)
-
 http://rohitsharma.org/practice-debug.apk
 
 # Apk Installation Command (Correct download location if its different for you)
